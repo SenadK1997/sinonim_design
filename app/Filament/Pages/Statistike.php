@@ -3,36 +3,29 @@
 namespace App\Filament\Pages;
 
 use BackedEnum;
-use Filament\Pages\Page;
+use Filament\Pages\Dashboard;
 use Filament\Support\Icons\Heroicon;
 
-class Statistike extends Page
+class Statistike extends Dashboard
 {
-    protected string $view = 'filament.pages.statistike';
+    protected static string $routePath = '/statistike';
+
+    protected static ?string $slug = 'statistike';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
     protected static ?string $navigationLabel = 'Statistike';
 
+    protected static ?string $title = 'Statistike';
+
     protected static string|\UnitEnum|null $navigationGroup = 'Prodaja';
 
     protected static ?int $navigationSort = 0;
 
-    public function getHeaderWidgets(): array
+    public function getWidgets(): array
     {
         return [
             \App\Filament\Widgets\StatsOverview::class,
-        ];
-    }
-
-    public function getHeaderWidgetsColumns(): int|array
-    {
-        return 4;
-    }
-
-    public function getFooterWidgets(): array
-    {
-        return [
             \App\Filament\Widgets\RevenueChart::class,
             \App\Filament\Widgets\OrdersByStatusChart::class,
             \App\Filament\Widgets\SalesByChannelChart::class,
@@ -40,7 +33,7 @@ class Statistike extends Page
         ];
     }
 
-    public function getFooterWidgetsColumns(): int|array
+    public function getColumns(): int|array
     {
         return 2;
     }

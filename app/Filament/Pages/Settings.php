@@ -31,6 +31,8 @@ class Settings extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Postavke sajta';
 
+    protected static ?string $title = 'Postavke sajta';
+
     protected static string|\UnitEnum|null $navigationGroup = 'Sistem';
 
     protected static ?int $navigationSort = 99;

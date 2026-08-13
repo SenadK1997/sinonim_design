@@ -4,37 +4,35 @@ namespace App\Filament\Widgets;
 
 use App\Models\OrderItem;
 use App\Support\Money;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Filament\Widgets\TableWidget;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Widgets\Widget;
+use Illuminate\Support\Facades\DB;
 
-class TopProducts extends TableWidget
+class TopProducts extends Widget
 {
-    protected static ?string $heading = 'Najprodavaniji proizvodi (zadnjih 30 dana)';
+    protected string $view = 'filament.widgets.top-products';
 
     protected int|string|array $columnSpan = 'full';
 
-    public function table(Table $table): Table
+    public function getTopProducts(): array
     {
-        return $table
-            ->query(fn (): Builder => OrderItem::query()
-                ->selectRaw('product_id, product_name, SUM(quantity) as total_qty, SUM(line_total) as total_revenue')
-                ->whereHas('order', fn ($q) => $q->whereIn('status', ['confirmed', 'shipped', 'completed'])
-                    ->where('created_at', '>=', now()->subDays(30)))
-                ->groupBy('product_id', 'product_name')
-                ->orderByDesc('total_qty')
-            )
-            ->columns([
-                TextColumn::make('product_name')->label('Proizvod')->weight('semibold'),
-                TextColumn::make('total_qty')->label('Prodato kom')->alignCenter(),
-                TextColumn::make('total_revenue')
-                    ->label('Prihod')
-                    ->formatStateUsing(fn ($state) => Money::format((float) $state))
-                    ->alignEnd(),
+        return OrderItem::query()
+            ->select([
+                'product_name',
+                DB::raw('SUM(quantity) as total_qty'),
+                DB::raw('SUM(line_total) as total_revenue'),
             ])
-            ->emptyStateHeading('Još nema podataka o prodaji')
-            ->emptyStateDescription('Prodaja iz ovog mjeseca će se prikazati ovdje.')
-            ->paginated(false);
+            ->whereHas('order', fn ($q) => $q
+                ->whereIn('status', ['confirmed', 'shipped', 'completed'])
+                ->where('created_at', '>=', now()->subDays(30)))
+            ->groupBy('product_name')
+            ->orderByDesc('total_qty')
+            ->limit(10)
+            ->get()
+            ->map(fn ($row) => [
+                'name' => $row->product_name,
+                'qty' => (int) $row->total_qty,
+                'revenue' => Money::format((float) $row->total_revenue),
+            ])
+            ->toArray();
     }
 }

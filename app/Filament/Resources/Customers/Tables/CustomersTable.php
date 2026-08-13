@@ -18,8 +18,15 @@ class CustomersTable
                 TextColumn::make('phone')->label('Telefon')->searchable(),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('city')->label('Grad')->searchable(),
-                TextColumn::make('orders_count')->label('Narudžbi')->counts('orders'),
-                TextColumn::make('created_at')->label('Registrovan')->dateTime('d.m.Y')->sortable(),
+                TextColumn::make('orders_count')
+                    ->label('Web narudžbi')
+                    ->counts('orders')
+                    ->tooltip('Broj narudžbi napravljenih preko sajta.'),
+                TextColumn::make('created_at')
+                    ->label('Prvi put dodan')
+                    ->dateTime('d.m.Y')
+                    ->sortable()
+                    ->tooltip('Datum kada je kupac prvi put unesen u sistem.'),
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([EditAction::make()])

@@ -142,16 +142,26 @@ class ProductForm
                     ]),
                 ]),
 
-                Tab::make('SEO')->schema([
-                    Section::make()->schema([
-                        TextInput::make('meta_title')
-                            ->label('SEO naslov (Google, Facebook)')
-                            ->maxLength(70),
-                        Textarea::make('meta_description')
-                            ->label('SEO opis')
-                            ->rows(3)
-                            ->maxLength(160),
-                    ]),
+                Tab::make('SEO (opcionalno)')->schema([
+                    Section::make()
+                        ->description(
+                            'Ova polja NISU obavezna. Ako ih ostaviš prazna, koristi se naziv i opis proizvoda automatski.
+
+Popuni samo ako želiš POSEBAN tekst kada se ovaj proizvod dijeli na Google, Facebook ili Instagram (npr. kraći, privlačniji naslov ili opis specifičan za pretragu).
+
+Preporuka: preskoči ovo — mi ćemo napraviti globalni SEO za sajt.'
+                        )
+                        ->schema([
+                            TextInput::make('meta_title')
+                                ->label('SEO naslov (za Google i Facebook)')
+                                ->maxLength(70)
+                                ->helperText('Prikazuje se u pretragama i pri dijeljenju. Idealno 50-60 znakova.'),
+                            Textarea::make('meta_description')
+                                ->label('SEO opis')
+                                ->rows(3)
+                                ->maxLength(160)
+                                ->helperText('Kratak opis koji Google pokaže ispod naslova u pretrazi. Idealno 120-155 znakova.'),
+                        ]),
                 ]),
             ])->columnSpanFull(),
         ]);
