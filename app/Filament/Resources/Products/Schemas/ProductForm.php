@@ -129,17 +129,29 @@ class ProductForm
                 ]),
 
                 Tab::make('Galerija slika')->schema([
-                    Section::make()->schema([
-                        SpatieMediaLibraryFileUpload::make('gallery')
-                            ->label('')
-                            ->collection('gallery')
-                            ->multiple()
-                            ->reorderable()
-                            ->image()
-                            ->imageEditor()
-                            ->columnSpanFull()
-                            ->helperText('Prva slika je glavna. Prevuci za promjenu redoslijeda.'),
-                    ]),
+                    Section::make()
+                        ->description('Upload slika proizvoda. Prva slika je glavna (prikazuje se u prodavnici i na kartici).')
+                        ->schema([
+                            SpatieMediaLibraryFileUpload::make('gallery')
+                                ->label('Slike')
+                                ->collection('gallery')
+                                ->multiple()
+                                ->reorderable()
+                                ->appendFiles()
+                                ->image()
+                                ->imageEditor()
+                                ->imageResizeMode('cover')
+                                ->imageCropAspectRatio('4:5')
+                                ->downloadable()
+                                ->openable()
+                                ->deletable()
+                                ->panelLayout('grid')
+                                ->maxSize(8192)
+                                ->maxFiles(15)
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                ->columnSpanFull()
+                                ->helperText('💡 Klikni na kanticu (🗑) na slici da je obrišeš. Prevuci slike za promjenu redoslijeda — prva slika je glavna. Max 8 MB po slici, do 15 slika.'),
+                        ]),
                 ]),
 
                 Tab::make('SEO (opcionalno)')->schema([

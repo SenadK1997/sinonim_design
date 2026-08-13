@@ -20,6 +20,9 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/app/public
+/storage/app/private
+/storage/app/brand-photos
 /vendor
 _ide_helper.php
 Homestead.json

@@ -19,16 +19,33 @@
                 </div>
             @endif
 
-            {{-- Badges --}}
-            <div class="absolute top-3 left-3 flex flex-col gap-1.5">
+            {{-- Sold out overlay — covers image with soft white tint --}}
+            @if(!$inStock)
+                <div class="absolute inset-0 bg-white/50 flex items-center justify-center">
+                    <span class="bg-[var(--color-ink)] text-white text-[10px] tracking-[0.3em] uppercase px-4 py-2">{{ __('Sold out') }}</span>
+                </div>
+            @endif
+
+            {{-- Refined labels — top-left, minimal --}}
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5 pointer-events-none">
                 @if($isOnSale)
-                    <span class="bg-[var(--color-ink)] text-white text-[10px] tracking-widest uppercase px-2 py-1">{{ __('Sale') }}</span>
-                @endif
-                @if(!$inStock)
-                    <span class="bg-neutral-500 text-white text-[10px] tracking-widest uppercase px-2 py-1">{{ __('Sold out') }}</span>
+                    @php
+                        $percentOff = $product->base_price > 0
+                            ? (int) round((($product->base_price - $product->sale_price) / $product->base_price) * 100)
+                            : 0;
+                    @endphp
+                    <span class="inline-flex items-center gap-1 bg-white/95 backdrop-blur text-[10px] tracking-[0.15em] uppercase text-[var(--color-ink)] px-2 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                        <span class="w-1 h-1 rounded-full bg-red-500"></span>
+                        @if($percentOff > 0) −{{ $percentOff }}% @else {{ __('Sale') }} @endif
+                    </span>
                 @endif
                 @if($product->is_made_to_order)
-                    <span class="bg-[var(--color-brand-700)] text-white text-[10px] tracking-widest uppercase px-2 py-1">{{ __('Made to order') }}</span>
+                    <span class="inline-flex items-center gap-1.5 bg-[var(--color-brand-50)]/95 backdrop-blur text-[10px] tracking-[0.15em] uppercase text-[var(--color-brand-800)] px-2 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-2.5 h-2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                        </svg>
+                        {{ __('Made to order') }}
+                    </span>
                 @endif
             </div>
 
