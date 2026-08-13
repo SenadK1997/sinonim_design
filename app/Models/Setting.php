@@ -46,4 +46,22 @@ class Setting extends Model
             ['value' => $stored, 'group' => $group, 'type' => $type]
         );
     }
+
+    /**
+     * Get a setting value, preferring the current locale variant if present.
+     * e.g. localized('hero_headline') returns hero_headline_en when locale=en and set, else hero_headline.
+     */
+    public static function localized(string $key, mixed $default = null): mixed
+    {
+        $locale = app()->getLocale();
+
+        if ($locale !== 'bs') {
+            $val = static::get($key . '_' . $locale);
+            if (! blank($val)) {
+                return $val;
+            }
+        }
+
+        return static::get($key, $default);
+    }
 }

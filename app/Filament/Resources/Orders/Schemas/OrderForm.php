@@ -45,33 +45,63 @@ class OrderForm
                 TextInput::make('shipping_country')->label('Država')->default('BA'),
             ]),
 
-            Section::make('Stavke narudžbe')->schema([
-                Repeater::make('items')
-                    ->label('')
-                    ->relationship()
-                    ->schema([
-                        TextInput::make('product_name')->label('Naziv proizvoda')->required(),
-                        TextInput::make('size')->label('Veličina'),
-                        TextInput::make('color')->label('Boja'),
-                        TextInput::make('quantity')->label('Količina')->numeric()->default(1)->required(),
-                        TextInput::make('unit_price')->label('Cijena po komadu')->numeric()->suffix('KM')->required(),
-                        TextInput::make('line_total')->label('Ukupno')->numeric()->suffix('KM')->required(),
-                    ])
-                    ->columns(3)
-                    ->addActionLabel('Dodaj stavku')
-                    ->defaultItems(1),
-            ]),
+            Section::make('Stavke narudžbe')
+                ->description('Proizvodi koji su naručeni.')
+                ->schema([
+                    Repeater::make('items')
+                        ->label('')
+                        ->relationship('items')
+                        ->schema([
+                            TextInput::make('product_name')
+                                ->label('Naziv proizvoda')
+                                ->required()
+                                ->columnSpanFull(),
+                            TextInput::make('size')->label('Veličina'),
+                            TextInput::make('color')->label('Boja'),
+                            TextInput::make('quantity')
+                                ->label('Količina')
+                                ->numeric()
+                                ->default(1)
+                                ->minValue(1)
+                                ->required()
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    $set('line_total', round(((float) ($get('unit_price') ?? 0)) * ((int) ($state ?? 1)), 2));
+                                }),
+                            TextInput::make('unit_price')
+                                ->label('Cijena po komadu')
+                                ->numeric()
+                                ->suffix('KM')
+                                ->required()
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    $set('line_total', round(((float) ($state ?? 0)) * ((int) ($get('quantity') ?? 1)), 2));
+                                }),
+                            TextInput::make('line_total')
+                                ->label('Ukupno')
+                                ->numeric()
+                                ->suffix('KM')
+                                ->required()
+                                ->helperText('Automatski se računa iz količine × cijene.'),
+                        ])
+                        ->columns(3)
+                        ->addActionLabel('+ Dodaj stavku')
+                        ->defaultItems(0)
+                        ->reorderable(false)
+                        ->itemLabel(fn (array $state): ?string => ($state['product_name'] ?? null) ? $state['product_name'] . ' × ' . ($state['quantity'] ?? 1) : 'Nova stavka'),
+                ]),
 
             Section::make('Iznosi')->columns(3)->schema([
-                TextInput::make('subtotal')->label('Međuzbir')->numeric()->suffix('KM')->required(),
+                TextInput::make('subtotal')->label('Međuzbir')->numeric()->suffix('KM')->required()->default(0),
                 TextInput::make('shipping_cost')->label('Dostava')->numeric()->suffix('KM')->default(0),
                 TextInput::make('discount_amount')->label('Popust')->numeric()->suffix('KM')->default(0),
                 TextInput::make('discount_code')->label('Kod popusta'),
-                TextInput::make('total')->label('UKUPNO')->numeric()->suffix('KM')->required(),
+                TextInput::make('total')->label('UKUPNO')->numeric()->suffix('KM')->required()->default(0),
                 Select::make('payment_method')
                     ->label('Način plaćanja')
                     ->options(['cod' => 'Pouzeće'])
-                    ->default('cod'),
+                    ->default('cod')
+                    ->required(),
             ]),
 
             Section::make('Napomene')->schema([

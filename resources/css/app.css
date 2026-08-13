@@ -73,3 +73,27 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 .fade-in { animation: fadeIn 600ms ease-out both; }
+
+/* Marquee strip */
+.marquee {
+    overflow: hidden;
+    width: 100%;
+}
+.marquee-track {
+    display: inline-flex;
+    align-items: center;
+    animation: marqueeSlide 40s linear infinite;
+    white-space: nowrap;
+}
+@keyframes marqueeSlide {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Line clamp helper (in case Tailwind plugin missing) */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

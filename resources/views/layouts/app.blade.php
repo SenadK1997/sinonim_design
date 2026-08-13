@@ -7,9 +7,9 @@
 
     @php
         $brand = \App\Models\Setting::get('brand_name', 'SinonimDesign');
-        $tagline = \App\Models\Setting::get('tagline');
+        $tagline = \App\Models\Setting::localized('tagline');
         $pageTitle = $title ?? null;
-        $pageDescription = $description ?? \App\Models\Setting::get('tagline', 'Ručno rađena kolekcija odjeće');
+        $pageDescription = $description ?? \App\Models\Setting::localized('tagline', 'Ručno rađena kolekcija odjeće');
         $ogImage = $ogImage ?? null;
     @endphp
 

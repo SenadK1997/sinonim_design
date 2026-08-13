@@ -3,7 +3,7 @@
         <p class="eyebrow mb-3">{{ __('About the brand') }}</p>
         <h1 class="font-display text-4xl md:text-5xl mb-8">{{ \App\Models\Setting::get('brand_name', 'SinonimDesign') }}</h1>
 
-        @php $about = \App\Models\Setting::get('about_text'); @endphp
+        @php $about = \App\Models\Setting::localized('about_text'); @endphp
 
         @if($about)
             <div class="prose max-w-none text-lg leading-relaxed opacity-90">

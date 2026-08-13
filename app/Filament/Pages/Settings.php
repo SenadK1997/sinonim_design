@@ -45,13 +45,18 @@ class Settings extends Page implements HasForms
             // Brand
             'brand_name' => Setting::get('brand_name', 'SinonimDesign'),
             'tagline' => Setting::get('tagline', 'Ručno rađena kolekcija'),
+            'tagline_en' => Setting::get('tagline_en'),
             'about_text' => Setting::get('about_text'),
+            'about_text_en' => Setting::get('about_text_en'),
 
             // Hero
             'hero_mode' => Setting::get('hero_mode', 'gradient'),
             'hero_headline' => Setting::get('hero_headline'),
+            'hero_headline_en' => Setting::get('hero_headline_en'),
             'hero_subheadline' => Setting::get('hero_subheadline'),
+            'hero_subheadline_en' => Setting::get('hero_subheadline_en'),
             'hero_cta_label' => Setting::get('hero_cta_label', 'Pogledaj kolekciju'),
+            'hero_cta_label_en' => Setting::get('hero_cta_label_en'),
             'hero_cta_url' => Setting::get('hero_cta_url', '/kolekcije'),
             'hero_gradient_from' => Setting::get('hero_gradient_from', '#efe7de'),
             'hero_gradient_to' => Setting::get('hero_gradient_to', '#c9a892'),
@@ -95,14 +100,21 @@ class Settings extends Page implements HasForms
                                 ->required()
                                 ->maxLength(60),
                             TextInput::make('tagline')
-                                ->label('Kratki opis (tagline)')
+                                ->label('Kratki opis / tagline (BS)')
+                                ->maxLength(120),
+                            TextInput::make('tagline_en')
+                                ->label('🇬🇧 Tagline (EN)')
                                 ->maxLength(120)
-                                ->helperText('Prikazuje se ispod logotipa i u pretraživačima.'),
+                                ->helperText('Verzija za engleski. Ako ostaviš prazno, koristi se bosanska.'),
                             Textarea::make('about_text')
-                                ->label('O nama — tekst za naslovnu i O nama stranicu')
-                                ->rows(5)
+                                ->label('O nama — tekst (BS)')
+                                ->rows(4)
+                                ->columnSpanFull(),
+                            Textarea::make('about_text_en')
+                                ->label('🇬🇧 About us — text (EN)')
+                                ->rows(4)
                                 ->columnSpanFull()
-                                ->helperText('Prikazuje se u sekciji "O brendu" na naslovnoj i na stranici /o-nama.'),
+                                ->helperText('Verzija za engleski. Prikazuje se posjetiteljima kada je EN aktivan. Ako ostaviš prazno, koristi se bosanska.'),
                         ]),
                 ]),
 
@@ -142,27 +154,45 @@ class Settings extends Page implements HasForms
                                 ->visible(fn ($get) => $get('hero_mode') === 'gradient'),
 
                             TextInput::make('hero_headline')
-                                ->label('Glavni naslov')
+                                ->label('Glavni naslov (BS)')
                                 ->maxLength(80)
                                 ->columnSpanFull()
                                 ->helperText('Veliki tekst na hero sekciji.')
                                 ->visible(fn ($get) => $get('hero_mode') !== 'none'),
+                            TextInput::make('hero_headline_en')
+                                ->label('🇬🇧 Main headline (EN)')
+                                ->maxLength(80)
+                                ->columnSpanFull()
+                                ->helperText('Ako ostaviš prazno, engleski posjetitelji vide bosansku verziju.')
+                                ->visible(fn ($get) => $get('hero_mode') !== 'none'),
 
                             Textarea::make('hero_subheadline')
-                                ->label('Podnaslov')
+                                ->label('Podnaslov (BS)')
+                                ->rows(2)
+                                ->maxLength(200)
+                                ->columnSpanFull()
+                                ->visible(fn ($get) => $get('hero_mode') !== 'none'),
+                            Textarea::make('hero_subheadline_en')
+                                ->label('🇬🇧 Subheadline (EN)')
                                 ->rows(2)
                                 ->maxLength(200)
                                 ->columnSpanFull()
                                 ->visible(fn ($get) => $get('hero_mode') !== 'none'),
 
                             TextInput::make('hero_cta_label')
-                                ->label('Tekst dugmeta')
+                                ->label('Tekst dugmeta (BS)')
                                 ->maxLength(40)
                                 ->helperText('npr. "Pogledaj kolekciju"')
+                                ->visible(fn ($get) => $get('hero_mode') !== 'none'),
+                            TextInput::make('hero_cta_label_en')
+                                ->label('🇬🇧 Button text (EN)')
+                                ->maxLength(40)
+                                ->helperText('npr. "Shop the collection"')
                                 ->visible(fn ($get) => $get('hero_mode') !== 'none'),
                             TextInput::make('hero_cta_url')
                                 ->label('Link dugmeta')
                                 ->helperText('npr. /kolekcije ili /prodavnica')
+                                ->columnSpanFull()
                                 ->visible(fn ($get) => $get('hero_mode') !== 'none'),
                         ]),
                 ]),

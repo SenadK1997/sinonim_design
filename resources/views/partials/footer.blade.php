@@ -11,7 +11,7 @@
     <div class="container-wide py-16 grid gap-12 md:grid-cols-4">
         <div class="md:col-span-2">
             <p class="font-display text-2xl">{{ $brand }}</p>
-            <p class="mt-3 text-sm max-w-md opacity-80">{{ __('Handmade with love') }} — {{ \App\Models\Setting::get('tagline', 'Ručno rađena kolekcija odjeće') }}</p>
+            <p class="mt-3 text-sm max-w-md opacity-80">{{ __('Handmade with love') }} — {{ \App\Models\Setting::localized('tagline', 'Ručno rađena kolekcija odjeće') }}</p>
 
             {{-- Newsletter --}}
             <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mt-6 flex gap-2 max-w-sm">
