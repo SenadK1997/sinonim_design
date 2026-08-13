@@ -51,6 +51,22 @@ echo "🌐  Tunnel:  starting… (URL banner appears in ~10 seconds)"
 echo "────────────────────────────────────────────────"
 echo ""
 
+# Build static assets so CSS/JS work on any device via the tunnel.
+# (Without this, @vite() points to localhost:5173 which mobile can't reach.)
+if command -v npm >/dev/null 2>&1; then
+    echo "🎨  Building assets (npm run build)…"
+    if [ ! -d node_modules ]; then
+        echo "    (installing npm packages first — this only happens once)"
+        npm install --silent 2>&1 | tail -3
+    fi
+    npm run build --silent 2>&1 | grep -E 'built|error' | tail -5
+    echo "    ✓ Assets ready in public/build/"
+    echo ""
+else
+    echo "⚠️  npm not found — skipping asset build (mobile CSS may break)"
+    echo ""
+fi
+
 cleanup() {
     echo ""
     echo "🛑  Stopping both processes…"

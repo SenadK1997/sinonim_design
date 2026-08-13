@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
@@ -32,10 +33,10 @@ Route::get('/proizvod/{slug}', [ProductController::class, 'show'])->name('produc
 Route::get('/korpa', [CartController::class, 'index'])->name('cart.index');
 Route::get('/lista-zelja', [WishlistController::class, 'index'])->name('wishlist.index');
 
-// Checkout (stubbed for now)
-Route::get('/kasa', function () {
-    return view('checkout.index');
-})->name('checkout.index');
+// Checkout (COD)
+Route::get('/kasa', [CheckoutController::class, 'show'])->name('checkout.index');
+Route::post('/kasa', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/narudzba/{orderNumber}', [CheckoutController::class, 'success'])->name('checkout.success');
 
 // Order lookup
 Route::get('/pratite-narudzbu', [OrderLookupController::class, 'show'])->name('order.lookup');

@@ -120,5 +120,18 @@
     "Get the next drop first.": "Saznajte prvi za novu kolekciju.",
     "Occasional emails, only when a new collection or restock arrives. No noise.": "Povremeni mailovi — samo kada stigne nova kolekcija ili obnova zaliha. Bez spama.",
     "Your email": "Vaš e-mail",
-    "Info": "Informacije"
+    "Info": "Informacije",
+    "Almost done.": "Skoro gotovo.",
+    "Shipping address": "Adresa za dostavu",
+    "Anything else we should know? (optional)": "Nešto što bismo trebali znati? (opcionalno)",
+    "You pay when the package arrives.": "Plaćate prilikom preuzimanja pošiljke.",
+    "Your order": "Vaša narudžba",
+    "Free": "BESPLATNO",
+    "Add :amount more for free shipping": "Dodajte još :amount za besplatnu dostavu",
+    "Thank you.": "Hvala Vam.",
+    "We've received your order. We'll contact you within 24 hours to confirm.": "Zaprimili smo Vašu narudžbu. Kontaktirat ćemo Vas u roku od 24 sata radi potvrde.",
+    "Order summary": "Pregled narudžbe",
+    "Shipping to": "Dostava na",
+    "Payment": "Plaćanje",
+    "Save your order number to track your order later:": "Sačuvajte broj narudžbe kako biste je kasnije mogli pratiti:"
 }
