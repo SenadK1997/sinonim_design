@@ -24,31 +24,31 @@ class ListOrders extends ListRecords
     {
         return [
             'all' => Tab::make('Sve')
-                ->badge(Order::count()),
+                ->badge(fn (): int => Order::count()),
 
             'pending' => Tab::make('Nove')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', Order::STATUS_PENDING))
-                ->badge(Order::where('status', Order::STATUS_PENDING)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', Order::STATUS_PENDING))
+                ->badge(fn (): int => Order::where('status', Order::STATUS_PENDING)->count())
                 ->badgeColor('warning'),
 
             'confirmed' => Tab::make('Potvrđene')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', Order::STATUS_CONFIRMED))
-                ->badge(Order::where('status', Order::STATUS_CONFIRMED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', Order::STATUS_CONFIRMED))
+                ->badge(fn (): int => Order::where('status', Order::STATUS_CONFIRMED)->count())
                 ->badgeColor('info'),
 
             'shipped' => Tab::make('Poslane')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', Order::STATUS_SHIPPED))
-                ->badge(Order::where('status', Order::STATUS_SHIPPED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', Order::STATUS_SHIPPED))
+                ->badge(fn (): int => Order::where('status', Order::STATUS_SHIPPED)->count())
                 ->badgeColor('primary'),
 
             'completed' => Tab::make('Završene')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', Order::STATUS_COMPLETED))
-                ->badge(Order::where('status', Order::STATUS_COMPLETED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', Order::STATUS_COMPLETED))
+                ->badge(fn (): int => Order::where('status', Order::STATUS_COMPLETED)->count())
                 ->badgeColor('success'),
 
             'cancelled' => Tab::make('Otkazane')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', Order::STATUS_CANCELLED))
-                ->badge(Order::where('status', Order::STATUS_CANCELLED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', Order::STATUS_CANCELLED))
+                ->badge(fn (): int => Order::where('status', Order::STATUS_CANCELLED)->count())
                 ->badgeColor('danger'),
         ];
     }

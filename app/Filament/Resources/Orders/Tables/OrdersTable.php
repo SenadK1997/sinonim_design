@@ -23,7 +23,11 @@ class OrdersTable
                 TextColumn::make('created_at')->label('Datum')->dateTime('d.m.Y H:i')->sortable(),
                 TextColumn::make('customer_name')->label('Kupac')->searchable(),
                 TextColumn::make('shipping_city')->label('Grad'),
-                TextColumn::make('items_count')->label('Stavki')->counts('items'),
+                TextColumn::make('items_qty')
+                    ->label('Stavki')
+                    ->state(fn (Order $record): int => $record->items()->count())
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('total')
                     ->label('Ukupno')
                     ->formatStateUsing(fn ($state) => \App\Support\Money::format((float) $state))
