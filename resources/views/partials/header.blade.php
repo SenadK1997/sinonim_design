@@ -1,5 +1,6 @@
 @php
     $brand = \App\Models\Setting::get('brand_name', 'SinonimDesign');
+    $logoPath = \App\Models\Setting::get('site_logo_path');
     $categories = \App\Models\Category::published()
         ->whereNull('parent_id')
         ->orderBy('sort_order')
@@ -23,8 +24,12 @@
         </button>
 
         {{-- Logo --}}
-        <a href="{{ url('/') }}" class="font-display text-xl md:text-2xl tracking-tight">
-            {{ $brand }}
+        <a href="{{ url('/') }}" class="block shrink-0" aria-label="{{ $brand }}">
+            @if($logoPath)
+                <img src="{{ asset('storage/'.$logoPath) }}" alt="{{ $brand }}" class="h-8 md:h-10 w-auto object-contain">
+            @else
+                <span class="font-display text-xl md:text-2xl tracking-tight">{{ $brand }}</span>
+            @endif
         </a>
 
         {{-- Desktop nav --}}

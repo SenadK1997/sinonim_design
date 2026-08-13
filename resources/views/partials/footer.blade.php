@@ -1,6 +1,7 @@
 @php
     $brand = \App\Models\Setting::get('brand_name', 'SinonimDesign');
     $tagline = \App\Models\Setting::localized('tagline', 'Ručno rađena kolekcija odjeće');
+    $footerLogo = \App\Models\Setting::get('site_logo_dark_path') ?: \App\Models\Setting::get('site_logo_path');
     $email = \App\Models\Setting::get('contact_email');
     $phone = \App\Models\Setting::get('contact_phone');
     $wa = \App\Models\Setting::get('whatsapp_number');
@@ -14,7 +15,11 @@
     <div class="border-b border-[var(--color-brand-800)]/40">
         <div class="container-wide py-16 md:py-20 grid gap-12 md:grid-cols-12 items-start">
             <div class="md:col-span-5">
-                <p class="eyebrow text-[var(--color-brand-400)] mb-3">{{ $brand }}</p>
+                @if($footerLogo)
+                    <img src="{{ asset('storage/'.$footerLogo) }}" alt="{{ $brand }}" class="h-12 md:h-16 w-auto object-contain mb-5">
+                @else
+                    <p class="eyebrow text-[var(--color-brand-400)] mb-3">{{ $brand }}</p>
+                @endif
                 <p class="font-display font-light text-3xl md:text-4xl leading-tight">
                     {{ __('Handmade with love') }},<br>
                     <em class="italic opacity-80">{{ $tagline }}</em>
@@ -63,11 +68,20 @@
         </div>
     </div>
 
-    {{-- Giant brand signature --}}
-    <div class="container-wide pt-16 md:pt-20 pb-8 md:pb-10 relative">
-        <p class="font-display font-light text-[18vw] md:text-[16vw] leading-[0.85] tracking-tight text-center whitespace-nowrap overflow-hidden">
-            <em class="italic bg-gradient-to-b from-[var(--color-brand-100)] via-[var(--color-brand-100)]/40 to-transparent bg-clip-text text-transparent">{{ $brand }}</em>
-        </p>
+    {{-- Giant brand signature / logo --}}
+    <div class="container-wide pt-16 md:pt-20 pb-8 md:pb-10 relative flex items-center justify-center">
+        @if($footerLogo)
+            <img
+                src="{{ asset('storage/'.$footerLogo) }}"
+                alt="{{ $brand }}"
+                class="max-h-40 md:max-h-56 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-700"
+                style="filter: drop-shadow(0 0 40px rgba(255,255,255,0.05));"
+            >
+        @else
+            <p class="font-display font-light text-[18vw] md:text-[16vw] leading-[0.85] tracking-tight text-center whitespace-nowrap overflow-hidden">
+                <em class="italic bg-gradient-to-b from-[var(--color-brand-100)] via-[var(--color-brand-100)]/40 to-transparent bg-clip-text text-transparent">{{ $brand }}</em>
+            </p>
+        @endif
     </div>
 
     {{-- Bottom strip --}}

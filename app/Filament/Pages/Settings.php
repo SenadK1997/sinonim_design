@@ -44,6 +44,9 @@ class Settings extends Page implements HasForms
         $this->form->fill([
             // Brand
             'brand_name' => Setting::get('brand_name', 'SinonimDesign'),
+            'site_logo_path' => Setting::get('site_logo_path'),
+            'site_logo_dark_path' => Setting::get('site_logo_dark_path'),
+            'favicon_path' => Setting::get('favicon_path'),
             'tagline' => Setting::get('tagline', 'Ručno rađena kolekcija'),
             'tagline_en' => Setting::get('tagline_en'),
             'about_text' => Setting::get('about_text'),
@@ -91,8 +94,39 @@ class Settings extends Page implements HasForms
             Tabs::make()->tabs([
 
                 Tab::make('Brend & O nama')->icon(Heroicon::OutlinedSparkles)->schema([
+                    Section::make('Logo')
+                        ->description('Logo se prikazuje u zaglavlju (header) i footeru. Ako nije postavljen, prikazuje se naziv brenda kao tekst.')
+                        ->columns(2)
+                        ->schema([
+                            FileUpload::make('site_logo_path')
+                                ->label('Logo (za svijetle pozadine)')
+                                ->image()
+                                ->directory('logo')
+                                ->visibility('public')
+                                ->maxSize(2048)
+                                ->acceptedFileTypes(['image/png', 'image/svg+xml', 'image/webp', 'image/jpeg'])
+                                ->helperText('Koristi se u zaglavlju (svijetla pozadina). Preporuka: transparent PNG ili SVG, visina 60–120 px.'),
+                            FileUpload::make('site_logo_dark_path')
+                                ->label('Logo (za tamnu pozadinu / footer)')
+                                ->image()
+                                ->directory('logo')
+                                ->visibility('public')
+                                ->maxSize(2048)
+                                ->acceptedFileTypes(['image/png', 'image/svg+xml', 'image/webp', 'image/jpeg'])
+                                ->helperText('Bijela / svjetla verzija loga za tamnu pozadinu (footer). Ostavi prazno da se koristi isti logo.'),
+                            FileUpload::make('favicon_path')
+                                ->label('Favicon (mala ikonica u tabu)')
+                                ->image()
+                                ->directory('logo')
+                                ->visibility('public')
+                                ->maxSize(256)
+                                ->acceptedFileTypes(['image/png', 'image/x-icon', 'image/svg+xml'])
+                                ->helperText('Kvadratna slika, 32×32 ili 64×64 px. PNG ili ICO.')
+                                ->columnSpanFull(),
+                        ]),
+
                     Section::make('Osnovni podaci brenda')
-                        ->description('Ovi podaci se koriste svugdje na sajtu (naslov, footer, meta oznake).')
+                        ->description('Naziv brenda koristi se u meta oznakama i kao fallback ako logo nije postavljen.')
                         ->columns(2)
                         ->schema([
                             TextInput::make('brand_name')

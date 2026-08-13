@@ -26,7 +26,12 @@
         <meta name="twitter:card" content="summary_large_image">
     @endif
 
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.ico') }}">
+    @php $faviconPath = \App\Models\Setting::get('favicon_path'); @endphp
+    @if($faviconPath)
+        <link rel="icon" href="{{ asset('storage/'.$faviconPath) }}">
+    @else
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.ico') }}">
+    @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
