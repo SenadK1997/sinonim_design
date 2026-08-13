@@ -65,7 +65,11 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Europe/Sarajevo'),
+
+    'currency' => env('APP_CURRENCY', 'BAM'),
+
+    'available_locales' => ['bs', 'en'],
 
     /*
     |--------------------------------------------------------------------------
