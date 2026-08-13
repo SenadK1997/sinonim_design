@@ -31,8 +31,8 @@
             </div>
 
             <div class="text-sm opacity-80 leading-relaxed">
-                <p>Za sva pitanja o proizvodima, dostupnosti i narudžbama, javite nam se putem WhatsApp-a ili Instagrama — najbrže vam odgovaramo tamo.</p>
-                <p class="mt-4">Radno vrijeme: Ponedjeljak–Subota, 09:00–18:00.</p>
+                <p>{{ __('For all questions about products, availability and orders, reach out via WhatsApp or Instagram — that\'s where we reply fastest.') }}</p>
+                <p class="mt-4">{{ __('Business hours: Monday–Saturday, 09:00–18:00.') }}</p>
             </div>
         </div>
     </section>

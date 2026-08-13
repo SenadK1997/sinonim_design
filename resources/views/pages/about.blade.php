@@ -18,16 +18,16 @@
 
         <div class="mt-12 grid md:grid-cols-3 gap-8 text-sm">
             <div>
-                <p class="font-display text-2xl mb-2">Ručno rađeno</p>
-                <p class="opacity-70">Svaki komad izlazi iz naše radionice — pažljivo sašiven i pregledan prije isporuke.</p>
+                <p class="font-display text-2xl mb-2">{{ __('Handmade') }}</p>
+                <p class="opacity-70">{{ __('Every piece leaves our workshop carefully sewn and inspected before delivery.') }}</p>
             </div>
             <div>
-                <p class="font-display text-2xl mb-2">Male serije</p>
-                <p class="opacity-70">Ne pravimo veliku količinu istih komada — kupujete nešto što neće nositi svi.</p>
+                <p class="font-display text-2xl mb-2">{{ __('Small batches') }}</p>
+                <p class="opacity-70">{{ __('We don\'t make large quantities of the same piece — you\'re buying something not everyone will be wearing.') }}</p>
             </div>
             <div>
-                <p class="font-display text-2xl mb-2">Prirodni materijali</p>
-                <p class="opacity-70">Biramo tkanine koje su ugodne, izdržljive i prijateljski nastrojene prema koži.</p>
+                <p class="font-display text-2xl mb-2">{{ __('Natural fabrics') }}</p>
+                <p class="opacity-70">{{ __('We choose fabrics that are comfortable, durable, and gentle on the skin.') }}</p>
             </div>
         </div>
     </section>

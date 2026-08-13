@@ -15,7 +15,7 @@
         </form>
 
         @if(request()->has('order_number') && ! $order)
-            <p class="mt-8 text-sm text-red-700">Narudžba nije pronađena. Provjerite broj narudžbe i telefon.</p>
+            <p class="mt-8 text-sm text-red-700">{{ __('Order not found. Check the order number and phone.') }}</p>
         @endif
 
         @if($order)

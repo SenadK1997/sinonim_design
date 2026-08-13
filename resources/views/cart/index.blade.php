@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex justify-between text-sm opacity-70">
                         <span>{{ __('Shipping') }}</span>
-                        <span>{{ __('Calculated at checkout') === 'Calculated at checkout' ? 'Računa se pri narudžbi' : __('Calculated at checkout') }}</span>
+                        <span>{{ __('Calculated at checkout') }}</span>
                     </div>
                     <a href="{{ route('checkout.index') }}" class="mt-6 block text-center bg-[var(--color-ink)] text-white text-xs tracking-[0.2em] uppercase py-4 hover:bg-[var(--color-brand-800)] transition">{{ __('Checkout') }}</a>
                 </div>

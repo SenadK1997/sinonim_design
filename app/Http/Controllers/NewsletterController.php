@@ -18,6 +18,6 @@ class NewsletterController extends Controller
             ['locale' => app()->getLocale()]
         );
 
-        return back()->with('newsletter_ok', 'Hvala na prijavi!');
+        return back()->with('newsletter_ok', __('Thanks for subscribing!'));
     }
 }

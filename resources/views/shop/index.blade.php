@@ -32,7 +32,7 @@
         @endif
 
         @if($products->isEmpty())
-            <p class="text-center py-24 opacity-60">Trenutno nema proizvoda u ovoj kategoriji.</p>
+            <p class="text-center py-24 opacity-60">{{ __('No products in this category yet.') }}</p>
         @else
             <div class="grid gap-6 md:gap-8 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach($products as $product)

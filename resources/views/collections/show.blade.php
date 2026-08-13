@@ -24,7 +24,7 @@
 
     <section class="container-wide py-16">
         @if($products->isEmpty())
-            <p class="text-center py-16 opacity-60">Ova kolekcija još nema objavljenih proizvoda.</p>
+            <p class="text-center py-16 opacity-60">{{ __('This collection has no published products yet.') }}</p>
         @else
             <div class="grid gap-6 md:gap-8 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach($products as $product)

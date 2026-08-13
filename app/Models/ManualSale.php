@@ -9,8 +9,13 @@ class ManualSale extends Model
 {
     protected $fillable = [
         'sold_at', 'product_id', 'product_name',
-        'quantity', 'amount', 'channel', 'customer_name', 'note',
+        'quantity', 'amount', 'channel', 'customer_id', 'customer_name', 'note',
     ];
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Customer::class);
+    }
 
     protected $casts = [
         'sold_at' => 'date',

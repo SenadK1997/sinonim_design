@@ -4,7 +4,7 @@
         <h1 class="font-display text-4xl md:text-5xl mb-12">{{ __('Collections') }}</h1>
 
         @if($collections->isEmpty())
-            <p class="text-center py-24 opacity-60">Trenutno nema objavljenih kolekcija.</p>
+            <p class="text-center py-24 opacity-60">{{ __('No published collections yet.') }}</p>
         @else
             <div class="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 @foreach($collections as $col)

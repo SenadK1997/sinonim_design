@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(1);
             $table->decimal('amount', 10, 2);
             $table->string('channel');
+            $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
             $table->string('customer_name')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();

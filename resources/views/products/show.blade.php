@@ -163,7 +163,7 @@
                         </button>
                     </div>
 
-                    <p class="text-xs opacity-70">{{ __('Cash on delivery') }} · {{ __('Free shipping') }} iznad {{ \App\Support\Money::format(\App\Models\Setting::get('shipping_free_over', 100)) }}</p>
+                    <p class="text-xs opacity-70">{{ __('Cash on delivery') }} · {{ __('Free shipping over :amount', ['amount' => \App\Support\Money::format(\App\Models\Setting::get('shipping_free_over', 100))]) }}</p>
                 </form>
 
                 @if($product->care_instructions)
