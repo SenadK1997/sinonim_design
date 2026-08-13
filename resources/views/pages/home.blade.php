@@ -112,9 +112,9 @@
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 {{ $collections->count() >= 3 ? 'lg:grid-cols-3' : '' }}">
-                @foreach($collections as $i => $col)
+                @foreach($collections as $col)
                     <a href="{{ route('collections.show', $col->slug) }}"
-                       class="group product-card block relative overflow-hidden aspect-[3/4] bg-[var(--color-brand-100)] {{ $i === 0 && $collections->count() === 2 ? '' : '' }}">
+                       class="group product-card block relative overflow-hidden aspect-[3/4] bg-[var(--color-brand-100)]">
                         @if($col->coverUrl('large'))
                             <img src="{{ $col->coverUrl('large') }}" alt="{{ $col->name }}" class="product-card-image w-full h-full object-cover" loading="lazy">
                         @else
@@ -190,47 +190,116 @@
         </section>
     @endif
 
-    {{-- Big brand statement --}}
-    <section class="border-y border-[var(--color-brand-200)] py-16 md:py-24 bg-[var(--color-paper)]">
-        <div class="container-wide text-center">
-            <p class="eyebrow mb-6">{{ __('Our promise') }}</p>
-            <p class="font-display font-light text-4xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl mx-auto">
-                {{ __('Not fast, not many.') }}<br>
-                <em class="italic opacity-80">{{ __('Just made with care.') }}</em>
-            </p>
+    {{-- NUMBERED MANIFESTO — magazine feature spread --}}
+    <section class="relative bg-[var(--color-ink)] text-[var(--color-brand-100)] overflow-hidden">
+        {{-- Decorative rotated brand mark --}}
+        <div class="hidden lg:block absolute -left-32 top-1/2 -translate-y-1/2 font-display italic text-[16rem] leading-none opacity-[0.04] pointer-events-none select-none -rotate-90 origin-center">
+            {{ $brand }}
+        </div>
+
+        <div class="container-wide py-24 md:py-36 relative">
+            <div class="max-w-2xl mb-16 md:mb-24">
+                <p class="eyebrow text-[var(--color-brand-300)] mb-4">{{ __('The manifesto') }}</p>
+                <h2 class="font-display font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05]">
+                    {{ __('Three principles.') }}<br>
+                    <em class="italic opacity-70">{{ __('Every stitch.') }}</em>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--color-brand-800)]/40">
+                @php
+                    $principles = [
+                        ['01', __('Handmade'), __('Every piece leaves our workshop carefully sewn and inspected before delivery.')],
+                        ['02', __('Small batches'), __('We don\'t make large quantities of the same piece — you\'re buying something not everyone will be wearing.')],
+                        ['03', __('Natural fabrics'), __('We choose fabrics that are comfortable, durable, and gentle on the skin.')],
+                    ];
+                @endphp
+                @foreach($principles as [$n, $title, $body])
+                    <div class="py-10 md:py-0 md:px-10 first:md:pl-0 last:md:pr-0 group">
+                        <div class="flex items-baseline gap-4 mb-6">
+                            <span class="font-display text-6xl md:text-7xl font-light opacity-30 group-hover:opacity-100 transition-opacity duration-500">{{ $n }}</span>
+                            <div class="flex-1 h-px bg-[var(--color-brand-800)]/60"></div>
+                        </div>
+                        <h3 class="font-display text-2xl md:text-3xl mb-4">{{ $title }}</h3>
+                        <p class="text-sm md:text-base opacity-70 leading-relaxed max-w-xs">{{ $body }}</p>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
 
-    {{-- Value cards --}}
-    <section class="container-wide py-24 md:py-32">
-        <div class="grid md:grid-cols-3 gap-12 md:gap-16">
-            <div class="text-center md:text-left">
-                <div class="inline-flex items-center justify-center w-14 h-14 border border-[var(--color-brand-300)] mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                    </svg>
+    {{-- BENTO PRODUCT MOSAIC — asymmetric editorial grid --}}
+    @if($promoted->count() >= 5)
+        <section class="py-24 md:py-32">
+            <div class="container-wide">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+                    <div>
+                        <p class="eyebrow mb-3">{{ __('Selected') }}</p>
+                        <h2 class="font-display text-4xl md:text-6xl leading-none max-w-2xl">
+                            <em class="italic">{{ __('Look closer.') }}</em>
+                        </h2>
+                    </div>
+                    <a href="{{ route('shop.index') }}" class="text-sm link-underline shrink-0 md:pb-2">{{ __('Explore all') }} →</a>
                 </div>
-                <h3 class="font-display text-2xl mb-3">{{ __('Handmade') }}</h3>
-                <p class="text-sm opacity-70 leading-relaxed">{{ __('Every piece leaves our workshop carefully sewn and inspected before delivery.') }}</p>
-            </div>
-            <div class="text-center md:text-left">
-                <div class="inline-flex items-center justify-center w-14 h-14 border border-[var(--color-brand-300)] mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.197V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
-                    </svg>
+
+                {{-- 5-tile asymmetric grid --}}
+                <div class="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-3 md:gap-4 h-[500px] md:h-[700px]">
+                    @php $mosaic = $promoted->slice(0, 5)->values(); @endphp
+                    @foreach($mosaic as $i => $product)
+                        <a href="{{ route('products.show', $product->slug) }}"
+                           class="group relative overflow-hidden bg-[var(--color-brand-100)]
+                                  {{ $i === 0 ? 'col-span-2 row-span-2 md:col-span-2 md:row-span-2' : '' }}
+                                  {{ $i === 1 ? 'md:col-start-3' : '' }}">
+                            @if($product->primaryImageUrl('large'))
+                                <img src="{{ $product->primaryImageUrl('large') }}" alt="{{ $product->name }}"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                            @else
+                                <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                                    <span class="font-display text-6xl">✦</span>
+                                </div>
+                            @endif
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                <p class="font-display text-xl md:text-2xl">{{ $product->name }}</p>
+                                <p class="text-xs md:text-sm opacity-80 mt-1">{{ \App\Support\Money::format($product->effectivePrice()) }}</p>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-                <h3 class="font-display text-2xl mb-3">{{ __('Small batches') }}</h3>
-                <p class="text-sm opacity-70 leading-relaxed">{{ __('We don\'t make large quantities of the same piece — you\'re buying something not everyone will be wearing.') }}</p>
             </div>
-            <div class="text-center md:text-left">
-                <div class="inline-flex items-center justify-center w-14 h-14 border border-[var(--color-brand-300)] mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-                    </svg>
-                </div>
-                <h3 class="font-display text-2xl mb-3">{{ __('Natural fabrics') }}</h3>
-                <p class="text-sm opacity-70 leading-relaxed">{{ __('We choose fabrics that are comfortable, durable, and gentle on the skin.') }}</p>
-            </div>
+        </section>
+    @endif
+
+    {{-- NEWSLETTER — big centered final invitation --}}
+    <section class="bg-[var(--color-brand-50)] py-24 md:py-36 relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none select-none">
+            <span class="font-display italic text-[28rem] leading-none whitespace-nowrap">{{ $brand }}</span>
+        </div>
+
+        <div class="container-wide relative max-w-2xl text-center">
+            <p class="eyebrow mb-4">{{ __('Newsletter') }}</p>
+            <h2 class="font-display font-light text-4xl md:text-5xl lg:text-6xl leading-tight">
+                {{ __('Stay in touch.') }}<br>
+                <em class="italic opacity-80">{{ __('Get the next drop first.') }}</em>
+            </h2>
+            <p class="mt-6 max-w-md mx-auto text-sm opacity-70">{{ __('Occasional emails, only when a new collection or restock arrives. No noise.') }}</p>
+
+            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                @csrf
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="{{ __('Your email') }}"
+                    class="flex-1 px-5 py-4 bg-[var(--color-paper)] border border-[var(--color-brand-300)] focus:outline-none focus:border-[var(--color-ink)] text-sm transition"
+                >
+                <button type="submit" class="px-6 py-4 bg-[var(--color-ink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--color-brand-800)] transition">
+                    {{ __('Subscribe') }}
+                </button>
+            </form>
+            @if(session('newsletter_ok'))
+                <p class="mt-4 text-xs text-[var(--color-brand-700)]">✓ {{ session('newsletter_ok') }}</p>
+            @endif
         </div>
     </section>
 </x-layouts.app>

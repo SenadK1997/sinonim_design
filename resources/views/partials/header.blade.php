@@ -73,21 +73,23 @@
 
         {{-- Right: language + wishlist + cart --}}
         <div class="flex items-center gap-4">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-3 pr-1">
                 <a
                     href="{{ route('language.switch', 'bs') }}"
                     title="Bosanski"
                     aria-label="Bosanski"
-                    class="flex items-center justify-center w-8 h-6 text-lg leading-none transition rounded-sm overflow-hidden {{ app()->getLocale() === 'bs' ? 'ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-paper)]' : 'opacity-50 grayscale hover:opacity-100 hover:grayscale-0' }}"
-                    style="font-family: 'Twemoji Country Flags', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;"
-                >🇧🇦</a>
+                    class="lang-flag {{ app()->getLocale() === 'bs' ? 'is-active' : '' }}"
+                >
+                    <span class="lang-flag__emoji">🇧🇦</span>
+                </a>
                 <a
                     href="{{ route('language.switch', 'en') }}"
                     title="English"
                     aria-label="English"
-                    class="flex items-center justify-center w-8 h-6 text-lg leading-none transition rounded-sm overflow-hidden {{ app()->getLocale() === 'en' ? 'ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-paper)]' : 'opacity-50 grayscale hover:opacity-100 hover:grayscale-0' }}"
-                    style="font-family: 'Twemoji Country Flags', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;"
-                >🇬🇧</a>
+                    class="lang-flag {{ app()->getLocale() === 'en' ? 'is-active' : '' }}"
+                >
+                    <span class="lang-flag__emoji">🇬🇧</span>
+                </a>
             </div>
 
             <a href="{{ route('wishlist.index') }}" class="relative p-1" aria-label="{{ __('Wishlist') }}">

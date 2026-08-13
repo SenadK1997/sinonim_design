@@ -1,71 +1,90 @@
 @php
     $brand = \App\Models\Setting::get('brand_name', 'SinonimDesign');
+    $tagline = \App\Models\Setting::localized('tagline', 'Ručno rađena kolekcija odjeće');
     $email = \App\Models\Setting::get('contact_email');
     $phone = \App\Models\Setting::get('contact_phone');
+    $wa = \App\Models\Setting::get('whatsapp_number');
     $ig = \App\Models\Setting::get('instagram_handle', 'sinonim_design');
     $fb = \App\Models\Setting::get('facebook_url');
     $tk = \App\Models\Setting::get('tiktok_url');
 @endphp
 
-<footer class="mt-24 border-t border-[var(--color-brand-200)] bg-[var(--color-brand-50)]">
-    <div class="container-wide py-16 grid gap-12 md:grid-cols-4">
-        <div class="md:col-span-2">
-            <p class="font-display text-2xl">{{ $brand }}</p>
-            <p class="mt-3 text-sm max-w-md opacity-80">{{ __('Handmade with love') }} — {{ \App\Models\Setting::localized('tagline', 'Ručno rađena kolekcija odjeće') }}</p>
+<footer class="mt-24 bg-[var(--color-ink)] text-[var(--color-brand-100)] relative overflow-hidden">
+    {{-- Top strip: brand statement --}}
+    <div class="border-b border-[var(--color-brand-800)]/40">
+        <div class="container-wide py-16 md:py-20 grid gap-12 md:grid-cols-12 items-start">
+            <div class="md:col-span-5">
+                <p class="eyebrow text-[var(--color-brand-400)] mb-3">{{ $brand }}</p>
+                <p class="font-display font-light text-3xl md:text-4xl leading-tight">
+                    {{ __('Handmade with love') }},<br>
+                    <em class="italic opacity-80">{{ $tagline }}</em>
+                </p>
+            </div>
 
-            {{-- Newsletter --}}
-            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mt-6 flex gap-2 max-w-sm">
-                @csrf
-                <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="{{ __('Email') }}"
-                    class="flex-1 px-4 py-2.5 bg-transparent border border-[var(--color-brand-300)] focus:outline-none focus:border-[var(--color-brand-600)] text-sm"
-                >
-                <button type="submit" class="px-5 py-2.5 bg-[var(--color-ink)] text-white text-xs tracking-widest uppercase hover:bg-[var(--color-brand-800)] transition">
-                    {{ __('Subscribe') }}
-                </button>
-            </form>
-            @if(session('newsletter_ok'))
-                <p class="mt-2 text-xs text-[var(--color-brand-700)]">✓ {{ session('newsletter_ok') }}</p>
-            @endif
-        </div>
+            {{-- Contact --}}
+            <div class="md:col-span-3">
+                <p class="eyebrow text-[var(--color-brand-400)] mb-5">{{ __('Contact') }}</p>
+                <ul class="space-y-3 text-sm">
+                    @if($email)<li><a href="mailto:{{ $email }}" class="link-underline">{{ $email }}</a></li>@endif
+                    @if($phone)<li><a href="tel:{{ $phone }}" class="link-underline">{{ $phone }}</a></li>@endif
+                    @if($wa)<li><a href="https://wa.me/{{ preg_replace('/\D/', '', $wa) }}" target="_blank" rel="noopener" class="link-underline">WhatsApp</a></li>@endif
+                </ul>
 
-        <div>
-            <p class="eyebrow mb-4">{{ __('Contact') }}</p>
-            <ul class="space-y-2 text-sm">
-                @if($email)<li><a href="mailto:{{ $email }}" class="link-underline">{{ $email }}</a></li>@endif
-                @if($phone)<li><a href="tel:{{ $phone }}" class="link-underline">{{ $phone }}</a></li>@endif
-            </ul>
+                <p class="eyebrow text-[var(--color-brand-400)] mt-8 mb-3">{{ __('Follow us') }}</p>
+                <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                    @if($ig)<li><a href="https://instagram.com/{{ ltrim($ig, '@') }}" target="_blank" rel="noopener" class="link-underline">Instagram</a></li>@endif
+                    @if($fb)<li><a href="{{ $fb }}" target="_blank" rel="noopener" class="link-underline">Facebook</a></li>@endif
+                    @if($tk)<li><a href="{{ $tk }}" target="_blank" rel="noopener" class="link-underline">TikTok</a></li>@endif
+                </ul>
+            </div>
 
-            <p class="eyebrow mt-6 mb-3">{{ __('Follow us') }}</p>
-            <ul class="flex gap-4">
-                @if($ig)
-                    <li><a href="https://instagram.com/{{ ltrim($ig, '@') }}" target="_blank" rel="noopener" class="link-underline">Instagram</a></li>
-                @endif
-                @if($fb)<li><a href="{{ $fb }}" target="_blank" rel="noopener" class="link-underline">Facebook</a></li>@endif
-                @if($tk)<li><a href="{{ $tk }}" target="_blank" rel="noopener" class="link-underline">TikTok</a></li>@endif
-            </ul>
-        </div>
+            {{-- Shop --}}
+            <div class="md:col-span-2">
+                <p class="eyebrow text-[var(--color-brand-400)] mb-5">{{ __('Shop') }}</p>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="{{ route('shop.index') }}" class="link-underline">{{ __('All products') }}</a></li>
+                    <li><a href="{{ route('collections.index') }}" class="link-underline">{{ __('Collections') }}</a></li>
+                    <li><a href="{{ route('wishlist.index') }}" class="link-underline">{{ __('Wishlist') }}</a></li>
+                    <li><a href="{{ route('order.lookup') }}" class="link-underline">{{ __('Track your order') }}</a></li>
+                </ul>
+            </div>
 
-        <div>
-            <p class="eyebrow mb-4">{{ __('Details') }}</p>
-            <ul class="space-y-2 text-sm">
-                <li><a href="{{ route('page.about') }}" class="link-underline">{{ __('About the brand') }}</a></li>
-                <li><a href="{{ route('page.shipping') }}" class="link-underline">{{ __('Shipping information') }}</a></li>
-                <li><a href="{{ route('page.returns') }}" class="link-underline">{{ __('Returns and refunds') }}</a></li>
-                <li><a href="{{ route('page.privacy') }}" class="link-underline">{{ __('Privacy policy') }}</a></li>
-                <li><a href="{{ route('page.terms') }}" class="link-underline">{{ __('Terms of service') }}</a></li>
-                <li><a href="{{ route('order.lookup') }}" class="link-underline">{{ __('Track your order') }}</a></li>
-            </ul>
+            {{-- Info --}}
+            <div class="md:col-span-2">
+                <p class="eyebrow text-[var(--color-brand-400)] mb-5">{{ __('Info') }}</p>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="{{ route('page.about') }}" class="link-underline">{{ __('About') }}</a></li>
+                    <li><a href="{{ route('page.shipping') }}" class="link-underline">{{ __('Shipping') }}</a></li>
+                    <li><a href="{{ route('page.returns') }}" class="link-underline">{{ __('Returns and refunds') }}</a></li>
+                    <li><a href="{{ route('page.privacy') }}" class="link-underline">{{ __('Privacy policy') }}</a></li>
+                    <li><a href="{{ route('page.terms') }}" class="link-underline">{{ __('Terms of service') }}</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="border-t border-[var(--color-brand-200)]">
-        <div class="container-wide py-6 flex flex-col md:flex-row justify-between gap-4 text-xs opacity-70">
+    {{-- Giant brand signature --}}
+    <div class="container-wide pt-16 md:pt-20 pb-8 md:pb-10 relative">
+        <p class="font-display font-light text-[18vw] md:text-[16vw] leading-[0.85] tracking-tight text-center whitespace-nowrap overflow-hidden">
+            <em class="italic bg-gradient-to-b from-[var(--color-brand-100)] via-[var(--color-brand-100)]/40 to-transparent bg-clip-text text-transparent">{{ $brand }}</em>
+        </p>
+    </div>
+
+    {{-- Bottom strip --}}
+    <div class="border-t border-[var(--color-brand-800)]/40">
+        <div class="container-wide py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs opacity-60">
             <p>© {{ date('Y') }} {{ $brand }}. {{ __('All rights reserved') }}.</p>
-            <p>{{ __('Cash on delivery') }} · {{ __('Handmade with love') }}</p>
+            <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
+                    {{ __('Cash on delivery') }}
+                </span>
+                <span class="opacity-40">·</span>
+                <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9-1.5V15A2.25 2.25 0 016.75 12.75h10.5A2.25 2.25 0 0119.5 15v2.25M4.5 15L6 12M18 15l-1.5-3M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3.375 3.375 0 00-3.285-4.5H2.25M3 6h12L14.25 12M3 6l.75 3"/></svg>
+                    Sarajevo, BiH
+                </span>
+            </div>
         </div>
     </div>
 </footer>
