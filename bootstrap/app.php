@@ -15,6 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
+
+        // Trust all proxies so requests via Cloudflare Tunnel (or any
+        // reverse proxy in production) report the correct scheme + host.
+        // This is what makes @vite() generate https:// URLs when served
+        // over the trycloudflare.com tunnel.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
