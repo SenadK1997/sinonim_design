@@ -8,7 +8,7 @@
 
 <article class="product-card group">
     <a href="{{ route('products.show', $product->slug) }}" class="block">
-        <div class="relative overflow-hidden aspect-[4/5] bg-[var(--color-brand-100)]">
+        <div class="relative overflow-hidden aspect-[4/5] bg-[var(--color-brand-100)] rounded-2xl">
             @if($img)
                 <img src="{{ $img }}" alt="{{ $product->name }}" class="product-card-image w-full h-full object-cover" loading="lazy">
             @else

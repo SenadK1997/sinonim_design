@@ -1,15 +1,17 @@
 <x-layouts.app :title="$collection->name">
     {{-- Cover --}}
     @if($collection->coverUrl('large'))
-        <section class="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden">
-            <img src="{{ $collection->coverUrl('large') }}" alt="{{ $collection->name }}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/30"></div>
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
-                <p class="eyebrow text-white/80 mb-3">{{ __('Collection') }}</p>
-                <h1 class="font-display text-4xl md:text-6xl lg:text-7xl">{{ $collection->name }}</h1>
-                @if($collection->description)
-                    <p class="mt-4 max-w-xl text-sm md:text-base opacity-90">{{ $collection->description }}</p>
-                @endif
+        <section class="container-wide pt-8 md:pt-10 pb-4">
+            <div class="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-[2rem] md:rounded-[2.5rem]">
+                <img src="{{ $collection->coverUrl('large') }}" alt="{{ $collection->name }}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
+                    <p class="eyebrow text-white/80 mb-3">{{ __('Collection') }}</p>
+                    <h1 class="font-display text-4xl md:text-6xl lg:text-7xl">{{ $collection->name }}</h1>
+                    @if($collection->description)
+                        <p class="mt-4 max-w-xl text-sm md:text-base opacity-90">{{ $collection->description }}</p>
+                    @endif
+                </div>
             </div>
         </section>
     @else

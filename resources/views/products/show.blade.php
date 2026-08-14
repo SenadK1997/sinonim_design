@@ -22,7 +22,7 @@
             {{-- Gallery --}}
             <div>
                 @if($images->count() > 0)
-                    <div class="aspect-[4/5] bg-[var(--color-brand-100)] overflow-hidden">
+                    <div class="aspect-[4/5] bg-[var(--color-brand-100)] overflow-hidden rounded-2xl md:rounded-3xl">
                         @foreach($images as $i => $img)
                             <img
                                 src="{{ $img->getUrl('large') }}"
@@ -36,14 +36,14 @@
                     @if($images->count() > 1)
                         <div class="grid grid-cols-5 gap-2 mt-3">
                             @foreach($images as $i => $img)
-                                <button @click="activeImage = {{ $i }}" class="aspect-square overflow-hidden" :class="activeImage === {{ $i }} ? 'ring-2 ring-[var(--color-ink)]' : ''">
+                                <button @click="activeImage = {{ $i }}" class="aspect-square overflow-hidden rounded-xl" :class="activeImage === {{ $i }} ? 'ring-2 ring-[var(--color-ink)]' : ''">
                                     <img src="{{ $img->getUrl('thumb') }}" alt="" class="w-full h-full object-cover" loading="lazy">
                                 </button>
                             @endforeach
                         </div>
                     @endif
                 @else
-                    <div class="aspect-[4/5] bg-[var(--color-brand-100)]"></div>
+                    <div class="aspect-[4/5] bg-[var(--color-brand-100)] rounded-2xl md:rounded-3xl"></div>
                 @endif
             </div>
 

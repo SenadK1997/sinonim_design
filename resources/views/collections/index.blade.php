@@ -8,7 +8,7 @@
         @else
             <div class="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 @foreach($collections as $col)
-                    <a href="{{ route('collections.show', $col->slug) }}" class="product-card group block relative overflow-hidden aspect-[4/5] bg-[var(--color-brand-100)]">
+                    <a href="{{ route('collections.show', $col->slug) }}" class="product-card group block relative overflow-hidden aspect-[4/5] bg-[var(--color-brand-100)] rounded-2xl md:rounded-3xl">
                         @if($col->coverUrl('large'))
                             <img src="{{ $col->coverUrl('large') }}" alt="{{ $col->name }}" class="product-card-image w-full h-full object-cover" loading="lazy">
                         @endif
